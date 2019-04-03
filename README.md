@@ -13,11 +13,7 @@ Under here you can find some good reading material sources to get you started do
 ## Configuration
 Configurations should always be explicit, so if any changes happens to default configuration on version change, it does not affect the installation. 
 
-For cluster configuration, please refer to these pages: 
-
-- [ES Cluster](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-cluster.html)
-- [Dzone tutorial 2018](https://dzone.com/articles/elasticsearch-tutorial-creating-an-elasticsearch-c)
-	- Configuration is the important part here.
+For cluster configuration, please refer to documentation below.
 
 ### Memory and swapping
 According to elasticsearch's own documentation `Elasticsearch performs poorly when the system is swapping the memory.`. Put it in other terms, make sure the system has enough memory by a wide margin. They suggest only letting ES us about half the system memory. On low memory systems, i would suggest lowering this to 1/3rd, to allow the operating system enough memory to function without swapping.
@@ -51,8 +47,17 @@ curl --request PUT \
 ```
 
 - [Datadog help](https://www.datadoghq.com/blog/elasticsearch-unassigned-shards/)
+- [Shard primer](https://docs.bonsai.io/article/122-shard-primer)
+- [Reduction of shard usage](https://docs.bonsai.io/article/124-reducing-shard-usage)
 
 ## Cluster and redundancy
+Elasticsearch *wants* to be clustered. Its designed to be for reduncancy and scalabiltiy purposes, and as such has some very nice built in configurations which allow for automatic discovery, data protection, and promotion of new primary shards in the event of node loss.
+
+It is highly recommended to run with at least 2 nodes, master and replica, on different servers in case of a node. This also addresses high availability concerns, in environments where the elasticsearch serve as the primary way of interacting with the data.
+
+- [ES Cluster](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-cluster.html)
+- [Dzone tutorial 2018](https://dzone.com/articles/elasticsearch-tutorial-creating-an-elasticsearch-c)
+	- Configuration is the important part here.
 
 ## Local setup with docker
 
