@@ -61,6 +61,11 @@ It is highly recommended to run with at least 2 nodes, master and replica, on di
 
 ## Local setup with docker
 
+* Install docker
+* Login or create account.
+* run `docker-compse up -d` to start the elasticsearch and kibana containers.
+* run `docker-compse stop` to stop the elasticsearch and kibana containers.
+
 ### Useful links
 
 - [Setup guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
