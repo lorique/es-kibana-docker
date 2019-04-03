@@ -1,5 +1,24 @@
 #!/bin/sh
 
+if [ ! -f ./shakespeare.json ]; then
+  curl https://download.elastic.co/demos/kibana/gettingstarted/shakespeare_6.0.json \
+  --output shakespeare.json
+fi
+
+if [ ! -f ./accounts.json ]; then
+  curl https://download.elastic.co/demos/kibana/gettingstarted/accounts.zip \
+  --output accounts.zip
+
+  unzip accounts.zip
+fi
+
+if [ ! -f ./logs.jsonl ]; then
+  curl https://download.elastic.co/demos/kibana/gettingstarted/logs.jsonl.gz \
+  --output logs.jsonl.gz
+  
+  gunzip logs.jsonl.gz
+fi
+
 curl -X PUT "localhost:9200/shakespeare" -H 'Content-Type: application/json' -d'
 {
  "mappings": {

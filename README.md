@@ -4,7 +4,6 @@ Elasticsearch can be a wonderful tool if used correctly, and with consideration 
 
 Under here you can find some good reading material sources to get you started down the fantastic world of lucene and elasticsearch.
 
-
 - [Learning](https://www.elastic.co/learn)
 - [Basic concepts](https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started-concepts.html)
 
@@ -12,9 +11,19 @@ Under here you can find some good reading material sources to get you started do
 
 
 ## Configuration
+Configurations should always be explicit, so if any changes happens to default configuration on version change, it does not affect the installation. 
+
+For cluster configuration, please refer to these pages: 
+
+- [ES Cluster](https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-cluster.html)
+- [Dzone tutorial 2018](https://dzone.com/articles/elasticsearch-tutorial-creating-an-elasticsearch-c)
+	- Configuration is the important part here.
 
 ### Memory and swapping
+According to elasticsearch's own documentation `Elasticsearch performs poorly when the system is swapping the memory.`. Put it in other terms, make sure the system has enough memory by a wide margin. They suggest only letting ES us about half the system memory. On low memory systems, i would suggest lowering this to 1/3rd, to allow the operating system enough memory to function without swapping.
 
+#### Allocation vs actual use.
+Generally speaking, when you set the -Xms and -Xmx environment variables for heap memory, its important to note that this only allocates the memory to the system. The actualy memory usage by the jvm can be checked using the `curl --request GET --url 'http://localhost:9200/_cluster/stats?human=&pretty='` request. Under nodes.jvm.mem.heap_used (of the result) you can check how much memory is actually being used. If this gets to within 80% of the nodes.jvm.mem.heap_max, consider adding more memory to the server to avoid issues with swapping.
 
 ### Production considerations
 Turns out elasticsearch 6 does come with a semi-sane configuration for single-node setups. However there are som considerations regarding memory, and location of log files and data store.
@@ -31,7 +40,19 @@ There are two key files to look for when we talk configuration. The elasticsearc
 
 ## Sharding considerations
 
-## Multinode and redundancy
+### Unassigned shards
+Unassigned shards are always present in a single-node elasticsearch, because there is always a primary shard in an index, and a replica for each primary shard. Elasticsearch tries to allocate these to nodes, but replicas cant live on the same node as primary shards, so they become unassigned. Controlling the number of replica can be done by updating the number of replica's an index can have. Updating this number can be done using this curl:
+
+```
+curl --request PUT \
+  --url http://localhost:9200/%5BINDEX%5D/_settings \
+  --header 'content-type: application/json' \
+  --data '{"number_of_replicas": 0}'
+```
+
+- [Datadog help](https://www.datadoghq.com/blog/elasticsearch-unassigned-shards/)
+
+## Cluster and redundancy
 
 ## Local setup with docker
 
