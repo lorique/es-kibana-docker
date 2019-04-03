@@ -14,7 +14,7 @@ Queries can be slow. Best practice is to search only the indexes you need, and t
 - [Full text query](https://www.elastic.co/guide/en/elasticsearch/reference/current/full-text-queries.html)
 
 ### Query_string vs match
-Query_string supports operators and many other goodies. It works just fine if you wan't to search accross all fields in the index, but because of all the goodies it can be slow.
+[Query_string](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html) supports operators and many other goodies. It works just fine if you wan't to search accross all fields in the index, but because of all the goodies it can be slow.
 
 ```
 {
