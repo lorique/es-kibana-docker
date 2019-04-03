@@ -66,6 +66,11 @@ It is highly recommended to run with at least 2 nodes, master and replica, on di
 * run `docker-compse up -d` to start the elasticsearch and kibana containers.
 * run `docker-compse stop` to stop the elasticsearch and kibana containers.
 
+Configuration files for [elasticsearch](elasticsearch.yml) and [kibana](kibana.yml) can be found in this directory. After changes to configuration files, run `docker-compse restart` to have them take effect.
+
+### Sample data
+With your containers started, you can run the [install](shakespeare/install.sh) file, to download and install the sample data libraries into your elasticsearch.
+
 ### Useful links
 
 - [Setup guide](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
