@@ -9,6 +9,40 @@ Under here you can find some good reading material sources to get you started do
 
 ## Queries
 
+Queries can be slow. Best practice is to search only the indexes you need, and the fields you want to know if the query is in. 
+
+- [Full text query](https://www.elastic.co/guide/en/elasticsearch/reference/current/full-text-queries.html)
+
+### Query_string vs match
+Query_string supports operators and many other goodies. It works just fine if you wan't to search accross all fields in the index, but because of all the goodies it can be slow.
+
+```
+{
+    "query": {
+        "query_string" : {
+            "default_field" : "field1",
+            "query" : "abc"
+        }
+    }
+}
+```
+
+### Multiple fields alternative.
+To query multiple fields, use the [multi_match](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html) query type. Example below.
+
+```
+{
+  "query": {
+    "multi_match" : {
+      "query":    "abc", 
+      "fields": [ "field1", "field2"],
+      "type": "cross_fields",
+      "operator": "or"
+    }
+  }
+}
+```
+
 
 ## Configuration
 Configurations should always be explicit, so if any changes happens to default configuration on version change, it does not affect the installation. 
